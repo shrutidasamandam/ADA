@@ -1,4 +1,4 @@
-// LAB 3
+// LAB 5
 
 #include<stdio.h>
 #include<stdlib.h>
