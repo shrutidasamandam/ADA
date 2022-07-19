@@ -1,3 +1,5 @@
+// LAB 3B
+
 #include <stdio.h>
 #include <conio.h>
 
