@@ -1,3 +1,5 @@
+// LAB 2 - PART A
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<conio.h>
