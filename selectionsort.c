@@ -1,3 +1,5 @@
+// LAB 3
+
 #include<stdio.h>
 #include<time.h>
 #include<stdlib.h> /* To recognise exit function when compiling with gcc*/
