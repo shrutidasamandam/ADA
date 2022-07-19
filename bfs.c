@@ -1,4 +1,4 @@
-// lab 3A
+// lab 4B
 
 #include <stdio.h>
 #include <conio.h>
