@@ -1,134 +1,82 @@
 // LAB 2
 
-#include<stdio.h>
-#include<time.h>
-#include<stdlib.h>
-int bin_srch(int[],int,int,int);
-int lin_srch(int[],int,int,int);
-void bub_sort(int[],int);
-int n,a[10000];
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int linearsearch(int a[],int n, int key)
+{
+    if(n<0) return -1;
+    else if (key == a[n-1]) return n-1;
+    else return linearsearch(a,n-1,key);
+}
+
+int binarysearch(int a[], int low, int high, int key)
+{
+    int mid;
+    mid = (low+high)/2;
+    if(low>high) return -1;
+    else if (key==a[mid]) return mid;
+    else if (key<a[mid]) return binarysearch(a,low,mid-1,key);
+    else return binarysearch(a,mid+1,high,key);
+}
+
 int main()
 {
-    int ch,key,search_status,temp;
-    clock_t end,start;
-    unsigned long int i,j;
-
+    int a[100000],pos,key,i,ch,n;
+    clock_t c;
+    printf("\nEnter number of elements");
+    scanf("%d",&n);
     while(1)
     {
-
-    printf("\n1:Binary search\t 2:Linear search\t3:Exit\n");
-    printf("enter your choice:\t");
-    scanf("%d",&ch);
-    switch(ch)
-    {
-    case 1:
-    n=1000;
-    while(n<=5000)
-    {
-        for(i=0;i<n;i++)
-
+        printf("\n1.Linear Search \n2.Binary Search \n3.Exit");
+        scanf("%d",&ch);
+        switch(ch)
         {
-
-            //a[i]=random(1000);
-            a[i]=i;//
-        }
-        key=a[n-1];
-        start=clock();
-       //bub_sort(a,n);//
-        search_status=bin_srch(a,0,n-1,key);
-        if(search_status==-1)
-            printf("\nkey not found");
-        else
-            printf("\n key found at position%d",search_status);
-            for(j=0;j<500000;j++){temp=38/600;}
-            end=clock();
-            printf("\n Time for n=%d is %fSecs",n,(((double)(end-start))/CLOCKS_PER_SEC));
-            n=n+1000;
-        }
-        break;
-    case 2:
-        n=1000;
-        while(n<=5000)
-        {
-             for(i=0;i<n;i++)
-
-        {
-
-            //a[i]=random(1000);
-            a[i]=i;//inserting numbers in ascending order
-        }
-        key=a[n-1];
-        start=clock();
-        search_status=lin_srch(a,0,n-1,key);
-        if(search_status==-1)
-            printf("\nkey not found");
-        else
-            printf("\n key found at position %d",search_status);
-            for(j=0;j<500000;j++){temp=38/600;}
-            end=clock();
-            printf("\n Time for n=%d is %fSecs",n,(((double)(end-start))/CLOCKS_PER_SEC));
-            n=n+1000;
-        }
-        break;
-        default:
-            exit(0);
-
-        }
-        getchar();
-    }
-}
-void_bub_sort(int a[],int n)
-{
-
-    int i,j,temp;
-    for(i=0;i<=n-2;i++)
-    {
-
-        for(j=0;j<=n-2-i;j++)
-        {
-
-            if(a[j]>a[j+1])
+            case 1: printf("\nThe elements are: ");
+            for(i=0; i<n; i++)
             {
-                temp=a[j];
-                a[j]=a[j+1];
-                a[j+1]=temp;
+                a[i]=rand()%100;
+                printf("%2d\t",a[i]);
             }
+            printf("\nEnter the search key");
+            scanf("%d",&key);
+            c = clock();
+            pos = linearsearch(a,n,key);
+            c = c-clock();
+            if(pos<0)
+            {
+                printf("\nElement not found");
+            }else {
+                printf("\nElement found at position %d",pos+1);
+            }
+            printf("\nTime taken to search is = %ld",c/CLOCKS_PER_SEC);
+            break;
+            
+            case 2: printf("\nThe elements are: ");
+            for(i=0; i<n; i++)
+            {
+                a[i]=rand()%100;
+                printf("%2d\t",a[i]);
+            }
+            printf("\nEnter the search key");
+            scanf("%d",&key);
+            c = clock();
+            pos = binarysearch(a,0,n,key);
+            c = c-clock();
+            if(pos<0)
+            {
+                printf("\nElement not found");
+            }else {
+                printf("\nElement found at position %d",pos+1);
+            }
+            printf("\nTime taken to search is = %ld",c/CLOCKS_PER_SEC);
+            break;
+            
+            case 3:
+            printf("\nExiting");
+            exit(0);
+            break;
         }
     }
-}
-int bin_srch(int a[],int low, int high,int key)
-{
-
-    int mid;
-    if(low>high)
-    {
-
-        return -1;
-    }
-    mid=(low+high)/2;
-    if(key==a[mid])
-    {
-        return mid;
-    }
-    if(key<a[mid])
-    {
-        return bin_srch(a, low,mid-1,key);
-    }
-    else
-        {
-        return bin_srch( a,mid+1, high, key);
-    }
-}
-int lin_srch(int a[],int i,int high,int key)
-{
-    if(i>high)
-    {
-
-        return-1;
-    }
-    if (key==a[i])
-    {
-        return i;
-    }
-    return lin_srch( a,i+1, high, key);
 }
