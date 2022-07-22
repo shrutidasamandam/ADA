@@ -1,45 +1,44 @@
-// LAB 5
+// LAB 5 - Sort a given set of N integer elements using Insertion Sort technique and compute its time taken. 
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<conio.h>
-#include<time.h>
-void insertion_sort(int n,int array[])
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void insertion(int a[],int n)
 {
-    int item,i,j;
-    for(i=1;i<n;i++)
+    int current,i,j;
+    for(i=1;i<=n;i++)
     {
-        item=array[i];
-        j=i-1;
-        while(item<array[j] && j>=0)
+        current = a[i];
+        j = i-1;
+        while(j>=0 && a[j]>current)
         {
-            array[j+1]=array[j];
+            a[j+1] = a[j];
             j--;
         }
-        array[j+1]=item;
+        a[j+1]=current;
     }
 }
-void main()
+
+int main()
 {
-    int a[10000],n,t,i;
-    clock_t end,start;
-    printf("Enter the number of array elements:\n");
+    int a[100000],n,i;
+    clock_t c;
+    printf("\n enter size of array");
     scanf("%d",&n);
-    printf("Enter the array elements:\n");
+    printf("\n elements before sorting");
     for(i=0;i<n;i++)
     {
-      a[i]=rand()%1000;
-      printf("%d\n",a[i]);
+        a[i]=rand()%100;
+        printf("%d\t",a[i]);
     }
-    start=clock();
-    for(int j=0;j<5000000;j++)
-        t=900/900;
-    insertion_sort(n,a);
-    printf("Sorted array:\n");
+    c = clock();
+    insertion(a,n);
+    c = c-clock();
+    printf("\n elements after sorting");
     for(i=0;i<n;i++)
     {
-        printf("%d\n",a[i]);
+        printf("%d\t",a[i]);
     }
-     end=clock();
-     printf("Time taken to search an given element in an array of is %f\n",(((double)(end-start))/CLOCKS_PER_SEC));
+    printf("\nTime taken to sort %lu",c/CLOCKS_PER_SEC);
 }
