@@ -1,57 +1,39 @@
-// LAB 4A
+// LAB 4B - Check whether a given graph is connected or not using DFS method.
 
 #include <stdio.h>
-#include <conio.h>
+#include <stdlib.h>
 
-int a[10][10], n, vis[10]
+int visited[10]={0},a[10][10],n;
 
-int dfs(int);
-
-void main()
+void dfs(int v)
 {
-    int i,j,src,ans;
-    for(j=1; j<=n; j++)
+    int i;
+    visited[v]=1;
+    for(i=1;i<=n;i++)
+    if(a[v][i] && !visited[i])
     {
-        vis[j] = 0;
-    }
-    printf("\nEnter no. of nodes:\n");
-    scanf("%d",&n);
-    printf("\nEnter adjacency matrix
-    for(i=1; i<=n;i++)
-    {
-        for(j=1; j<=n; j++)
-        {
-            scanf("%d",&a[i][j]);
-        }
-    }
-    printf("\nEnter source node");
-    scanf("%d",&src);
-    ans = dfs(src);
-    if(ans == 1)
-    {
-        printf("\nGraph is connected");
-    } else {
-        printf("\nGraph is not connected")
+        printf("\n%d-->%d\n",v,i);
+        dfs(i);
     }
 }
 
-int dfs (int src) {
-    int j;
-    vis[src] = 1;
-    for(j=1; j<=n; j++)
+void main()
+{
+    int i,j,count=0;
+    printf("\nEnter number of vertices");
+    scanf("%d",&n);
+    printf("\NEnter the adjacent matrix");
+    for(i=1;i<=n;i++)
+        for(j=1;j<=n;j++)
+            scanf("%d",&a[i][j]);
+    dfs(1);
+    for(i=1;i<=n;i++)
     {
-        if(a[src][j]==1&&vis[j]!=1)
-        {
-            dfs(j);
-        }
+        if(visited[i])
+        count++;
     }
-    for(j=1; j<=n; j++)
-    {
-        if(vis[j]!=1)
-        {
-            printf ("\n node %d is not reachable\n", j);
-        } else {
-            printf (" \n node %d is reachable \n", j);
-        }
-    }
+    if(n==count)
+    printf("\ngraph is connected");
+    else
+    printf("\ngraph is not connected");
 }
