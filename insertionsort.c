@@ -4,39 +4,39 @@
 #include <stdlib.h>
 #include <time.h>
 
-void insertion(int a[],int n)
+void insertionsort(int a[], int n)
 {
-    int current,i,j;
-    for(i=1;i<=n;i++)
+  int current,i,j;
+  for(i=1; i<=n; i++)
+  {
+    current = a[i];
+    j=i-1;
+    while(j>=0 && a[j]>current)
     {
-        current = a[i];
-        j = i-1;
-        while(j>=0 && a[j]>current)
-        {
-            a[j+1] = a[j];
-            j--;
-        }
-        a[j+1]=current;
+      a[j+1] = a[j];
+      j--;
     }
+      a[j+1] = current;
+  }
 }
 
-int main()
+void main()
 {
-    int a[100000],n,i;
-    clock_t c;
-    printf("\n enter size of array");
-    scanf("%d",&n);
-    printf("\n elements before sorting");
-    for(i=0;i<n;i++)
-    {
-        a[i]=rand()%100;
-        printf("%d\t",a[i]);
-    }
-    c = clock();
-    insertion(a,n);
-    c = c-clock();
-    printf("\n elements after sorting");
-    for(i=0;i<n;i++)
+  int num,i,j,a[10000];
+  printf("\nEnter number of elements");
+  scanf("%d",&num);
+  for(int i=1; i<=num; i++)
+  {
+    a[i] = rand()%100;
+    printf("\t%d",a[i]);
+  }
+  insertionsort(a,num);
+  printf("\nSorted elementd: ");
+  for(int i=1; i<=num; i++)
+  {
+    printf("\n%d",a[i]);
+  }
+}
     {
         printf("%d\t",a[i]);
     }
