@@ -1,111 +1,122 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int LEFT_TO_RIGHT = 1;
-int RIGHT_TO_LEFT = 0;
 
-// finding position of largest mobile integer in a[]
-int searcharray(int a[], int n, int mobile)
+int swap(int *a,int *b)
 {
-  for(int i=0; i<n; i++)
-  if(a[i]==mobile)
-  return i+1;
+     int t = *a;
+    *a = *b;
+    *b = t;
 }
 
-// finding largest largest movile integer
-int getmobile(int a[], int dir[], int n)
+int search(int arr[],int num,int mobile)
 {
-  int mobile_prev=0, mobile=0;
-  for(int i=0; i<n; i++)
-  {
-    // direction 0 is RIGHT TO LEFT ->
-    if(dir[a[i]-1] == RIGHT_TO_LEFT && i!=0)
+    int g;
+    for(g=0;g<num;g++)
     {
-      if(a[i]>a[i-1] && a[i] > mobile_prev)
-      {
-        mobile = a[i];
-        mobile_prev = mobile;
-      }
+        if(arr[g] == mobile)
+        {
+             return g;
+        }
     }
+    return -1;
+}
 
-    // direction 1 is LEFT to RIGHT
-    if(dir[a[i]-1] == LEFT_TO_RIGHT && i!=n-1)
+int find_Moblie(int arr[],int d[],int num)
+{
+    int mobile = 0;
+
+    int i;
+    for(i=0;i<num;i++)
     {
-      if(a[i]>a[i-1] && a[i]>mobile_prev)
-      {
-        mobile = a[i];
-        mobile_prev = mobile;
-      }
+        if((d[arr[i]-1] == 0) && i != 0)
+        {
+            if(arr[i]>arr[i-1] && arr[i]>mobile)
+            {
+                mobile =  arr[i];
+
+            }
+
+        }
+        else if((d[arr[i]-1] == 1) & i != num-1)
+        {
+            if(arr[i]>arr[i+1] && arr[i]>mobile)
+            {
+                mobile = arr[i];
+
+            }
+
+        }
+
     }
-  }
-  if(mobile == 0 && mobile_prev == 0)
-  return 0;
-  else
-  return mobile;
+    if(mobile == 0)
+        return 0;
+    else
+        return mobile;
 }
-
-int printperm(int a[], int dir[], int n)
+void permutations(int arr[],int d[],int num)
 {
-  int mobile = getmobile(a,dir,n);
-  int pos = searcharray(a,n,mobile);
+    int i;
 
-  // swapping elements inorder to direction
-  if(dir[a[pos-1]-1] == RIGHT_TO_LEFT)
-  {
-    int temp;
-    temp = a[pos-1];
-    a[pos-1] = a[pos-2];
-    a[pos-2] = temp;
-  } else if (dir[a[pos-1]-1] == LEFT_TO_RIGHT)
-  {
-    int temp;
-    temp = a[pos];
-    a[pos] = a[pos-1];
-    a[pos-1] = temp;
-  }
-  printf("\n");
-  for(int i=0; i<n; i++)
-  {
-    if(a[i]>mobile)
+    int mobile = find_Moblie(arr,d,num);
+
+    int pos = search(arr,num,mobile);
+
+
+    if(d[mobile-1]==0)
+        swap(&arr[pos],&arr[pos-1]);
+    else
+        swap(&arr[pos],&arr[pos+1]);
+    for(int i=0;i<num;i++)
     {
-      if(dir[a[i]-1]== LEFT_TO_RIGHT)
-      dir[a[i]-1] = RIGHT_TO_LEFT;
-      else if (dir[a[i]-1] == RIGHT_TO_LEFT)
-      dir[a[i]-1] = LEFT_TO_RIGHT;
+        if(arr[i] > mobile)
+        {
+            if(d[arr[i]-1]==0)
+                d[arr[i]-1] = 1;
+            else
+                d[arr[i]-1] = 0;
+        }
     }
-  }
-  for(int i=0; i<n; i++)
-  printf("%d",a[i]);
+    for(i=0;i<num;i++)
+    {
+        printf(" %d ",arr[i]);
+    }
 }
 
-int factorial(int n)
+int factorial(int k)
 {
-  int res = 1;
-  int i;
-  for(i=1; i<=n; i++)
-  {
-    res = res * i;
-  }
-  return res;
+    int f = 1;
+    int i = 0;
+    for(i=1;i<k+1;i++)
+    {
+        f = f*i;
+    }
+    return f;
 }
-
-void printallperm(int n)
-{
-  int a[n];
-  int dir[n];
-  for(int i=0; i<n; i++)
-  {
-    a[i] = i+1;
-    printf("%d",a[i]);
-  }
-  for(int i=0; i<n; i++)
-  dir[i] = RIGHT_TO_LEFT;
-  for(int i=1; i<factorial(n); i++)
-  printperm(a,dir,n);
-}
-
 int main()
 {
-  int n = 4;
-  printallperm(n);
-  return 0;
+    int num = 0;
+    int i;
+    int j;
+    
+    printf("Johnson trotter algorithm to find all permutations of given numbers \n");
+    printf("Enter the number\n");
+    scanf("%d",&num);
+    int arr[num],d[num];
+    printf("\nAll possible permutations are: \n");
+    
+    for(i=0;i<num;i++)
+    {
+        d[i] = 0;
+        arr[i] = i+1;
+        printf(" %d ",arr[i]);
+    }
+    printf("\n");
+    
+    for(j=1;j<factorial(num);j++)
+    {
+        permutations(arr,d,num);
+        printf("\n");
+    }
+    return 0;
 }
