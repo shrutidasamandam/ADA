@@ -1,55 +1,58 @@
 #include <stdio.h>
-  
-void swap(int *x, int *y)
+#include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int a[100],n;
+
+void swap(int *a, int *b)
 {
-    int temp = *x;
-    *x = *y;
-    *y = temp;
+  int temp;
+  temp = *a;
+  *a = *b;
+  *b = temp;
 }
-  
-void selectionsort(int list[], int size)
+
+int selectionsort(int a[], int n)
 {
-    int i, j, min;
-  
-    // One by one move boundary of unsorted subarray
-    for (i = 0; i < size-1; i++)
+
+  int i,j,min;
+  for(i=0; i<n-1; i++)
+  {
+    min = i;
+    for(j=i+1; j<n; j++)
     {
-        // Find the minimum element in unsorted array
-        min = i;
-        for (j = i+1; j < size; j++)
-          if (list[j] < list[min])
-            min = j;
-  
-        // Swap the found minimum element with the first element
-        swap(&list[min], &list[i]);
+      if(a[j]<a[min])
+      min = j;
+
+      if(min!=i)
+      swap(&a[min],&a[i]);
     }
+  }
 }
-  
-/* Function to print an array */
-void printArray(int list[], int size)
-{
-    int i;
-    for (i=0; i < size; i++)
-        printf("%d ", list[i]);
-    printf("\n");
-}
-  
-// Driver program to test above functions
+
 int main()
 {
-    int size, list[25];
+  clock_t start,end;
 
-    printf("Enter the size of the list: ");
-    scanf("%d",&size);
+  printf("\nEnter number of elements: ");
+  scanf("\n%d",&n);
 
-    printf("Enter the elements of the list: ");
-    for(int i=0;i<size;i++)
-    {
-        scanf("%d",&list[i]);
-    }
-    
-    selectionsort(list, size);
-    printf("After selection sort: \n");
-    printArray(list, size);
-    return 0;
+  printf("\nRandom elements to be sorted: ");
+  for(int i=0; i<n; i++)
+  {
+    a[i] = rand()%100;
+    printf("\t%d",a[i]);
+  }
+  start = clock();
+  selectionsort(a,n);
+  end = clock();
+
+  printf("\nRandom elements to be sorted: ");
+  for(int i=0; i<n; i++)
+  {
+    printf("\t%d",a[i]);
+  }
+  printf("\nTime taken to sort is %f",(double)(end-start)/CLOCKS_PER_SEC);
 }
